@@ -88,7 +88,6 @@ if (deltaTime <= 0) {
   });
   dateTimePicker.disabled = false;
   startBtn.disabled = false;
-  return;
 }
 
 function addLeadingZero(value) {
