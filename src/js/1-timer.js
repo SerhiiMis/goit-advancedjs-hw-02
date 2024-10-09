@@ -13,7 +13,6 @@ const seconds = document.querySelector('[data-seconds]');
 let selectedDate = null;
 let intervalId = null;
 
-// Disable the "Start" button initially
 startBtn.disabled = true;
 
 const options = {
@@ -28,7 +27,6 @@ const options = {
         message: 'Please choose a date in the future',
         position: 'topCenter',
       });
-      startBtn.disabled = true;
     } else {
       selectedDate = date;
       startBtn.disabled = false;
@@ -38,18 +36,14 @@ const options = {
 
 flatpickr(dateTimePicker, options);
 
-// Event listener for "Start" button click
 startBtn.addEventListener('click', () => {
-  if (!selectedDate) {
-    return;
-  }
+  if (!selectedDate) return;
 
   startBtn.disabled = true;
-  dateTimePicker.disabled = true; // Disable the date input after starting the timer
+  dateTimePicker.disabled = true;
 
   intervalId = setInterval(() => {
     const deltaTime = selectedDate - new Date();
-
     if (deltaTime <= 0) {
       clearInterval(intervalId);
       iziToast.success({
@@ -57,6 +51,7 @@ startBtn.addEventListener('click', () => {
         position: 'topCenter',
       });
       dateTimePicker.disabled = false;
+      startBtn.disabled = true;
       return;
     }
 
@@ -65,7 +60,6 @@ startBtn.addEventListener('click', () => {
   }, 1000);
 });
 
-// Function to update the timer display
 function updateTimerDisplay({ days: d, hours: h, minutes: m, seconds: s }) {
   days.textContent = addLeadingZero(d);
   hours.textContent = addLeadingZero(h);
@@ -73,7 +67,6 @@ function updateTimerDisplay({ days: d, hours: h, minutes: m, seconds: s }) {
   seconds.textContent = addLeadingZero(s);
 }
 
-// Function to convert milliseconds into days, hours, minutes, and seconds
 function convertMs(ms) {
   const second = 1000;
   const minute = second * 60;
@@ -88,7 +81,17 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-// Function to add leading zero to single-digit numbers
+if (deltaTime <= 0) {
+  clearInterval(intervalId);
+  iziToast.success({
+    message: 'Timer has ended!',
+    position: 'topCenter',
+  });
+  dateTimePicker.disabled = false;
+  startBtn.disabled = false;
+  return;
+}
+
 function addLeadingZero(value) {
   return String(value).padStart(2, '0');
 }

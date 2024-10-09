@@ -5,9 +5,9 @@
 .timer {
   margin: 32px auto;
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
-  gap: 16px;
+  gap: 24px;
 }
 
 .field {
@@ -23,4 +23,9 @@
 .label {
   font-size: 16px;
   text-transform: uppercase;
+}
+
+.custom-btn[data-start]:disabled {
+  background: #cfcfcf;
+  color: #989898;
 }
