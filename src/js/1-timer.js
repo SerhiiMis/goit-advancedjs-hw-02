@@ -52,7 +52,6 @@ startBtn.addEventListener('click', () => {
       });
       dateTimePicker.disabled = false;
       startBtn.disabled = true;
-      return;
     }
 
     const time = convertMs(deltaTime);
